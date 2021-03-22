@@ -9,7 +9,7 @@ export class AutoComplete {
     try {
 
       const apiUrl = `${explorerApi}&graphVersion=${version}&url=${url}`;
-      console.log(apiUrl)
+      
       const data = await fetch(apiUrl, {
         headers: {
           "accept": "application/json"

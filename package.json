@@ -43,6 +43,7 @@
 		"webpack-cli": "^4.4.0"
 	},
 	"dependencies": {
+		"native-url": "0.3.4",
 		"node-fetch": "2.6.1"
 	}
 }

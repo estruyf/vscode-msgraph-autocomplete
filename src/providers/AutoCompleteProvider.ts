@@ -1,13 +1,14 @@
+const url = require('native-url');
 import { CancellationToken, CompletionItem, CompletionItemKind, CompletionItemProvider, Position, TextDocument } from 'vscode';
 import { PATH_BETA, PATH_V1 } from '../constants';
-import { OpenApiGet, OpenApiType, Parameter } from '../models/OpenApiType';
+import { Suggestion, OpenApiGet, OpenApiType, Parameter } from '../models';
 import { AutoComplete } from '../utils/AutoComplete';
 
-
 export class AutoCompleteProvider implements CompletionItemProvider {
+  private lastPath: string = "";
   private cache: { [version: string]: { [path: string]: any } } = {};
   
-  constructor(private rootData: OpenApiType | null) {
+  constructor(rootData: OpenApiType | null) {
     this.cache = {
       v1: {
         "/": rootData
@@ -45,7 +46,7 @@ export class AutoCompleteProvider implements CompletionItemProvider {
 
     const split = currentLine.split(v1 ? `/${PATH_V1}` : `/${PATH_BETA}`);
     const last = split.pop();
-    let suggestions: string[] = [];
+    let suggestions: Suggestion[] = [];
 
     if (character === "/") {
       suggestions = await this.getPaths(v1, last as string);
@@ -57,7 +58,11 @@ export class AutoCompleteProvider implements CompletionItemProvider {
       suggestions = await this.getParameters(v1, path);
     }
 
-    return suggestions.map(s => new CompletionItem(s, CompletionItemKind.Value));
+    return suggestions.map(s => {
+      const suggestion = new CompletionItem(s.value, CompletionItemKind.Value);
+      suggestion.detail = s.description;
+      return suggestion;
+    });
   }
 
   /**
@@ -66,14 +71,15 @@ export class AutoCompleteProvider implements CompletionItemProvider {
    * @param path 
    * @returns 
    */
-  private async getPaths(isV1: boolean, path: string) {
-    let suggestions: string[] = [];
+  private async getPaths(isV1: boolean, path: string): Promise<Suggestion[]> {
+    let suggestions: Suggestion[] = [];
 
     if (path) {
+      this.lastPath = path;
       const apiPath = path === "/" ? "/" : path.substring(0, path.length - 1);
 
       if (this.cache[isV1 ? "v1" : "beta"][apiPath]) {
-        suggestions = this.getLinkValues(this.cache[isV1 ? "v1" : "beta"][apiPath].get);
+        suggestions = this.getLinkValues(this.cache[isV1 ? "v1" : "beta"][apiPath]?.paths[apiPath].get);
       } else {
         const apiData = await AutoComplete.get(apiPath, isV1 ? PATH_V1 : PATH_BETA);
         
@@ -91,14 +97,20 @@ export class AutoCompleteProvider implements CompletionItemProvider {
    * @param isV1 
    * @param path 
    */
-  private async getParameters(isV1: boolean, path: string) {
-    let suggestions: string[] = [];
+  private async getParameters(isV1: boolean, path: string): Promise<Suggestion[]> {
+    let suggestions: Suggestion[] = [];
 
+    if (!path.endsWith("/")) {
+      path = `${path}/`;
+    }
+    
     if (path) {
-      const apiPath = path === "/" ? "/" : path.substring(0, path.length - 1);
+      const uri = url.parse(path);
+      const { pathname } = uri;
+      let apiPath = pathname === "/" ? "/" : pathname.substring(0, pathname.length - 1);
 
       if (this.cache[isV1 ? "v1" : "beta"][apiPath]) {
-        suggestions = this.getVerbParameterValues(this.cache[isV1 ? "v1" : "beta"][apiPath].get);
+        suggestions = this.getVerbParameterValues(this.cache[isV1 ? "v1" : "beta"][apiPath]?.paths[apiPath].get);
       } else {
         const apiData = await AutoComplete.get(apiPath, isV1 ? PATH_V1 : PATH_BETA);
         
@@ -116,15 +128,18 @@ export class AutoCompleteProvider implements CompletionItemProvider {
    * @param values 
    * @returns 
    */
-  private getVerbParameterValues(values: OpenApiGet | undefined): string[] {
-    const parameterValues: string[] = [];
+  private getVerbParameterValues(values: OpenApiGet | undefined): Suggestion[] {
+    const parameterValues: Suggestion[] = [];
 
     if (values) {
       const queryParameters = values.parameters;
       if (queryParameters && queryParameters.length > 0) {
         queryParameters.forEach((parameter: Parameter) => {
           if (parameter.name && parameter.in === 'query') {
-            parameterValues.push(parameter.name);
+            parameterValues.push({
+              value: parameter.name,
+              description: parameter.description
+            });
           }
         });
       }
@@ -138,13 +153,13 @@ export class AutoCompleteProvider implements CompletionItemProvider {
    * @param values 
    * @returns 
    */
-  private getLinkValues(values: OpenApiGet | undefined): string[] {
+  private getLinkValues(values: OpenApiGet | undefined): Suggestion[] {
     if (values) {
       const responses = values.responses;
       if (responses) {
         const responsesAtIndex200 = responses['200'];
         if (responsesAtIndex200 && responsesAtIndex200.links) {
-          return Object.keys(responsesAtIndex200.links);
+          return Object.keys(responsesAtIndex200.links).map(s => ({ value: s, description: responsesAtIndex200.description }));
         }
       }
     }
