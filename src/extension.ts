@@ -9,11 +9,11 @@ export async function activate(context: vscode.ExtensionContext) {
 		pattern: '**'
 	}];
 
-	let disposable = vscode.languages.registerCompletionItemProvider(selector, new AutoCompleteProvider(initData), '/');
+	const disposable = vscode.languages.registerCompletionItemProvider(selector, new AutoCompleteProvider(initData), '/', '?', '&');
 
 	context.subscriptions.push(disposable);
 
-	console.log('Congratulations, your extension "vscode-msgraph-autocomplete" is now active!');
+	console.log('The "vscode-msgraph-autocomplete" extension is now active!');
 }
 
 // this method is called when your extension is deactivated

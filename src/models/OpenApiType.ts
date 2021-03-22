@@ -22,6 +22,12 @@ export interface _ {
 export interface OpenApiGet {
   operationId: string;
   responses: Responses;
+  parameters: Parameter[];
+}
+
+interface Items {
+  enum: string[];
+  type: string;
 }
 
 export interface Responses {
@@ -107,4 +113,21 @@ export interface Server {
 export interface Info {
   title: string;
   version: string;
+}
+
+export interface Parameter {
+  name: string;
+  in: string;
+  description: string;
+  schema: Schema;
+  example?: number;
+  style?: string;
+  explode?: boolean;
+}
+
+export interface Schema {
+  minimum?: number;
+  type: string;
+  uniqueItems?: boolean;
+  items?: Items;
 }
