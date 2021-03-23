@@ -4,6 +4,7 @@ import { CancellationToken, CompletionItem, CompletionItemKind, CompletionItemPr
 import { PATH_BETA, PATH_V1 } from '../constants';
 import { Suggestion, OpenApiType, OpenApiResponse, Value } from '../models';
 import { AutoComplete } from '../utils/AutoComplete';
+import { sanitizePath } from '../utils/SanitizePathSegments';
 
 export class AutoCompleteProvider implements CompletionItemProvider {
   private lastApiPath: string = "";
@@ -69,7 +70,7 @@ export class AutoCompleteProvider implements CompletionItemProvider {
     }
 
     return suggestions.map(s => {
-      const suggestion = new CompletionItem(s.value, CompletionItemKind.Value);
+      const suggestion = new CompletionItem(s.value, s.completion || CompletionItemKind.Value);
       if (s.description) {
         suggestion.detail = s.description;
       }
@@ -88,7 +89,16 @@ export class AutoCompleteProvider implements CompletionItemProvider {
 
     if (path) {
       this.lastApiPath = path;
-      const apiPath = path === "/" ? "/" : path.substring(0, path.length - 1);
+
+      if (path === "/users/") {
+        suggestions.push({ description: "Provide your user ID or username", value: "{users-id}", completion: CompletionItemKind.Keyword });
+      }
+
+      let apiPath = path;
+      if (apiPath !== "/") {
+        apiPath = path.substring(0, path.length - 1);
+        apiPath = sanitizePath(apiPath);
+      }
 
       let parsedApiData: OpenApiResponse | null = null;
 
@@ -103,7 +113,7 @@ export class AutoCompleteProvider implements CompletionItemProvider {
       }
 
       if (parsedApiData && parsedApiData.parameters && parsedApiData.parameters.length > 0) {
-        suggestions = parsedApiData.parameters[0].links.map(l => ({ description: "", value: l }));
+        suggestions = [...suggestions, ...parsedApiData.parameters[0].links.map(l => ({ description: "", value: l }))];
       }
     }
 
@@ -130,7 +140,11 @@ export class AutoCompleteProvider implements CompletionItemProvider {
         pathname = `${pathname}/`;
       }
 
-      let apiPath = pathname === "/" ? "/" : pathname.substring(0, pathname.length - 1);
+      let apiPath = path;
+      if (apiPath !== "/") {
+        apiPath = path.substring(0, path.length - 1);
+        apiPath = sanitizePath(apiPath);
+      }
 
       let parsedApiData: OpenApiResponse | null = null;
 

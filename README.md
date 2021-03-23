@@ -4,6 +4,8 @@ This VSCode extension allows you to auto-complete the Microsoft Graph API URLs y
 
 > **Info**: The extension does this with the help of the APIs behind the Microsoft Graph Explorer.
 
+![](./assets/how-it-works.gif)
+
 ## Usage
 
 Start typing `https://graph.microsoft.com/`, and you will automatically get suggestions to autocomplete the URL with API paths, query string parameters, and values.
