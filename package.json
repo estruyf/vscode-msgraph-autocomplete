@@ -1,13 +1,38 @@
 {
 	"name": "vscode-msgraph-autocomplete",
-	"displayName": "vscode-msgraph-autocomplete",
-	"description": "Allows you to autocomplete the Microsoft Graph API URLs.",
+	"displayName": "MS Graph Completion",
+	"description": "This VSCode extension allows you to auto-complete the Microsoft Graph API URLs you are writing. The extension does this by the help of the APIs behind the Microsoft Graph Explorer.",
+	"icon": "assets/logo.png",
 	"version": "0.0.1",
+	"preview": true,
+	"publisher": "eliostruyf",
+	"galleryBanner": {
+		"color": "#161938",
+		"theme": "dark"
+	},
+	"badges": [
+		{
+			"description": "version",
+			"url": "https://img.shields.io/github/package-json/v/estruyf/vscode-msgraph-autocomplete?color=green&label=vscode-msgraph-autocomplete&style=flat-square",
+			"href": "https://github.com/estruyf/vscode-msgraph-autocomplete"
+		}
+	],
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/estruyf/vscode-msgraph-autocomplete"
+	},
 	"engines": {
 		"vscode": "^1.54.0"
 	},
 	"categories": [
 		"Other"
+	],
+	"keywords": [
+		"microsoft",
+		"graph",
+		"autocomplete",
+		"msgraph",
+		"api"
 	],
 	"activationEvents": [
 		"*"

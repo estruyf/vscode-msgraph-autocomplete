@@ -9,7 +9,7 @@ export async function activate(context: vscode.ExtensionContext) {
 		pattern: '**'
 	}];
 
-	const disposable = vscode.languages.registerCompletionItemProvider(selector, new AutoCompleteProvider(initData), '/', '?', '&');
+	const disposable = vscode.languages.registerCompletionItemProvider(selector, new AutoCompleteProvider(initData), '/', '?', '&', '=', ',');
 
 	context.subscriptions.push(disposable);
 

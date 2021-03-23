@@ -1,70 +1,21 @@
-# vscode-msgraph-autocomplete README
+# MS Graph Completion
 
-This is the README for your extension "vscode-msgraph-autocomplete". After writing up a brief description, we recommend including the following sections.
+This VSCode extension allows you to auto-complete the Microsoft Graph API URLs you are writing. You get the most useful Microsoft Graph Explorer functionality in your favorite editor.
 
-## Features
+> **Info**: The extension does this by the help of the APIs behind the Microsoft Graph Explorer.
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+## Usage
 
-For example if there is an image subfolder under your extension project workspace:
+Start typing `https://graph.microsoft.com/` and you will automatically get suggestions to autocomplete the URL with API paths, query string parameters, and values.
 
-\!\[feature X\]\(images/feature-x.png\)
+## What is supported?
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+Currently, the extension only supports the `GET` requests for the Microsoft Graph.
 
-## Requirements
+## Contributing
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+If you find this a useful extension, and want to see more functionalities added. Feel free to contribute: [GitHub Repository](https://github.com/estruyf/vscode-msgraph-autocomplete).
 
-## Extension Settings
+## Feedback / issues / ideas
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
-
-For example:
-
-This extension contributes the following settings:
-
-* `myExtension.enable`: enable/disable this extension
-* `myExtension.thing`: set to `blah` to do something
-
-## Known Issues
-
-Calling out known issues can help limit users opening duplicate issues against your extension.
-
-## Release Notes
-
-Users appreciate release notes as you update your extension.
-
-### 1.0.0
-
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
-
------------------------------------------------------------------------------------------------------------
-## Following extension guidelines
-
-Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
-
-* [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
-
-## Working with Markdown
-
-**Note:** You can author your README using Visual Studio Code.  Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux)
-* Toggle preview (`Shift+CMD+V` on macOS or `Shift+Ctrl+V` on Windows and Linux)
-* Press `Ctrl+Space` (Windows, Linux) or `Cmd+Space` (macOS) to see a list of Markdown snippets
-
-### For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+Please submit them via creating an issue in the project repository: [issue list](https://github.com/estruyf/vscode-msgraph-autocomplete/issues).

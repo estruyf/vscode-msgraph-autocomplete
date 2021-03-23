@@ -12,17 +12,17 @@ export interface Security {
 }
 
 export interface Paths {
-  [apiPath: string]: _;
+  [apiPath: string]: PathValue;
 }
 
-export interface _ {
-  get: OpenApiGet;
+export interface PathValue {
+  [verb: string]: OpenApiResp;
 }
 
-export interface OpenApiGet {
+export interface OpenApiResp {
   operationId: string;
   responses: Responses;
-  parameters: Parameter[];
+  parameters: ApiParameter[];
 }
 
 interface Items {
@@ -115,7 +115,7 @@ export interface Info {
   version: string;
 }
 
-export interface Parameter {
+export interface ApiParameter {
   name: string;
   in: string;
   description: string;
