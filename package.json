@@ -35,10 +35,18 @@
 		"api"
 	],
 	"activationEvents": [
-		"*"
+		"*",
+		"onCommand:msgraph.autocomplete.clearCache"
 	],
 	"main": "./dist/extension.js",
-	"contributes": {},
+	"contributes": {
+		"commands": [
+			{
+				"command": "msgraph.autocomplete.clearCache",
+				"title": "MS Graph: Clear autocomplete cache"
+			}
+		]
+	},
 	"scripts": {
 		"vscode:prepublish": "npm run package",
 		"compile": "webpack",

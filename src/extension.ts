@@ -1,4 +1,6 @@
+import { CacheProvider } from './providers/CacheProvider';
 import * as vscode from 'vscode';
+import { EXTENSION_NAME } from './constants';
 import { AutoCompleteProvider } from './providers/AutoCompleteProvider';
 import { AutoComplete } from './utils/AutoComplete';
 
@@ -9,11 +11,17 @@ export async function activate(context: vscode.ExtensionContext) {
 		pattern: '**'
 	}];
 
-	const disposable = vscode.languages.registerCompletionItemProvider(selector, new AutoCompleteProvider(initData), '/', '?', '&', '=', ',');
+	const disposable = vscode.languages.registerCompletionItemProvider(selector, new AutoCompleteProvider(context, initData), '/', '?', '&', '=', ',');
+
+	const clearCache = vscode.commands.registerCommand('msgraph.autocomplete.clearCache', async () => {
+		const cache: CacheProvider = CacheProvider.getInstance(context, "name");
+		cache.clear();
+	});
 
 	context.subscriptions.push(disposable);
+	context.subscriptions.push(clearCache);
 
-	console.log('The "vscode-msgraph-autocomplete" extension is now active!');
+	console.log(`${EXTENSION_NAME} active`);
 }
 
 // this method is called when your extension is deactivated

@@ -10,6 +10,14 @@ This VSCode extension allows you to auto-complete the Microsoft Graph API URLs y
 
 Start typing `https://graph.microsoft.com/`, and you will automatically get suggestions to autocomplete the URL with API paths, query string parameters, and values.
 
+### Commands
+
+#### MS Graph: Clear autocomplete cache
+
+By default, the cached data persists for 8 hours. If you want, you can always clear the cache by using the *MS Graph: Clear autocomplete cache* (`msgraph.autocomplete.clearCache`) command.
+
+![](./assets/clear-cache.png)
+
 ## What is supported?
 
 Currently, the extension only supports the `GET` requests for the Microsoft Graph.

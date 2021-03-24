@@ -5,19 +5,21 @@ import { PATH_BETA, PATH_V1 } from '../constants';
 import { Suggestion, OpenApiType, OpenApiResponse, Value } from '../models';
 import { AutoComplete } from '../utils/AutoComplete';
 import { sanitizePath } from '../utils/SanitizePathSegments';
+import { CacheProvider } from './CacheProvider';
+import { ExtensionContext } from 'vscode';
 
 export class AutoCompleteProvider implements CompletionItemProvider {
   private lastApiPath: string = "";
   private values: Value[] = [];
-  private cache: { [version: string]: { [path: string]: any } } = {};
+  private cache: CacheProvider;
   
-  constructor(rootData: OpenApiType | null) {
-    this.cache = {
+  constructor(context: ExtensionContext, rootData: OpenApiType | null) {
+    this.cache = CacheProvider.getInstance(context, "cache", {
       v1: {
         "/": rootData
       },
       beta: {}
-    };
+    });
   }
 
   /**
@@ -102,12 +104,15 @@ export class AutoCompleteProvider implements CompletionItemProvider {
 
       let parsedApiData: OpenApiResponse | null = null;
 
-      if (this.cache[isV1 ? "v1" : "beta"][apiPath]) {
-        parsedApiData = OpenApiParser.parseOpenApiResponse({ response: this.cache[isV1 ? "v1" : "beta"][apiPath], url: apiPath });
+      const cachedData = await this.cache.get((isV1 ? "v1" : "beta"), apiPath);
+      if (cachedData) {
+        parsedApiData = OpenApiParser.parseOpenApiResponse({ response: cachedData, url: apiPath });
       } else {
         const apiData = await AutoComplete.get(apiPath, isV1 ? PATH_V1 : PATH_BETA);
         
-        this.cache[isV1 ? "v1" : "beta"][apiPath] = apiData;
+        if (apiData) {
+          await this.cache.put((isV1 ? "v1" : "beta"), apiPath, apiData);
+        }
         
         parsedApiData = apiData ? OpenApiParser.parseOpenApiResponse({ response: apiData, url: apiPath }) : null;
       }
@@ -148,12 +153,15 @@ export class AutoCompleteProvider implements CompletionItemProvider {
 
       let parsedApiData: OpenApiResponse | null = null;
 
-      if (this.cache[isV1 ? "v1" : "beta"][apiPath]) {
-        parsedApiData = OpenApiParser.parseOpenApiResponse({ response: this.cache[isV1 ? "v1" : "beta"][apiPath], url: apiPath });
+      const cachedData = await this.cache.get((isV1 ? "v1" : "beta"), apiPath);
+      if (cachedData) {
+        parsedApiData = OpenApiParser.parseOpenApiResponse({ response: cachedData, url: apiPath });
       } else {
         const apiData = await AutoComplete.get(apiPath, isV1 ? PATH_V1 : PATH_BETA);
         
-        this.cache[isV1 ? "v1" : "beta"][apiPath] = apiData;
+        if (apiData) {
+          await this.cache.put((isV1 ? "v1" : "beta"), apiPath, apiData);
+        }
   
         parsedApiData = apiData ? OpenApiParser.parseOpenApiResponse({ response: apiData, url: apiPath }) : null;
       }
