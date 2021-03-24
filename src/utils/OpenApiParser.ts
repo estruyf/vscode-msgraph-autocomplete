@@ -1,4 +1,4 @@
-import { OpenApiData, OpenApiResp, OpenApiResponse, Parameter, PathValue, Value } from "../models";
+import { OpenApiData, PathValueResp, OpenApiResponse, Parameter, PathValue, Value } from "../models";
 
 
 export class OpenApiParser {
@@ -26,7 +26,7 @@ export class OpenApiParser {
     }
   }
 
-  public static getVerbParameterValues(values: OpenApiResp): Value[] {
+  public static getVerbParameterValues(values: PathValueResp): Value[] {
     const parameterValues: any[] = [];
     const queryParameters = values.parameters;
     if (queryParameters && queryParameters.length > 0) {
@@ -43,7 +43,7 @@ export class OpenApiParser {
     return parameterValues;
   }
 
-  public static getLinkValues(values: OpenApiResp): string[] {
+  public static getLinkValues(values: PathValueResp): string[] {
     const responses = values.responses;
     if (responses) {
       const responsesAtIndex200 = responses['200'];

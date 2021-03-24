@@ -3,7 +3,7 @@ export interface OpenApiType {
   info: Info;
   servers: Server[];
   paths: Paths;
-  components: Invitations;
+  components: any;
   security: Security[];
 }
 
@@ -16,13 +16,16 @@ export interface Paths {
 }
 
 export interface PathValue {
-  [verb: string]: OpenApiResp;
+  [verb: string]: PathValueResp;
 }
 
-export interface OpenApiResp {
+export interface PathValueResp {
   operationId: string;
   responses: Responses;
   parameters: ApiParameter[];
+  tags: string[];
+  summary: string;
+  requestBody: any;
 }
 
 interface Items {
@@ -31,78 +34,12 @@ interface Items {
 }
 
 export interface Responses {
-  '200': _200;
+  '200': OkResponse;
 }
 
-export interface _200 {
+export interface OkResponse {
   description: string;
-  links: Links;
-}
-
-export interface Links {
-  invitations: Invitations;
-  users: Invitations;
-  applicationTemplates: Invitations;
-  authenticationMethodConfigurations: Invitations;
-  identityProviders: Invitations;
-  applications: Invitations;
-  certificateBasedAuthConfiguration: Invitations;
-  contacts: Invitations;
-  contracts: Invitations;
-  devices: Invitations;
-  directoryObjects: Invitations;
-  directoryRoles: Invitations;
-  directoryRoleTemplates: Invitations;
-  domainDnsRecords: Invitations;
-  domains: Invitations;
-  groups: Invitations;
-  groupSettings: Invitations;
-  groupSettingTemplates: Invitations;
-  localizations: Invitations;
-  oauth2PermissionGrants: Invitations;
-  organization: Invitations;
-  permissionGrants: Invitations;
-  scopedRoleMemberships: Invitations;
-  servicePrincipals: Invitations;
-  subscribedSkus: Invitations;
-  workbooks: Invitations;
-  places: Invitations;
-  drives: Invitations;
-  shares: Invitations;
-  sites: Invitations;
-  schemaExtensions: Invitations;
-  groupLifecyclePolicies: Invitations;
-  agreementAcceptances: Invitations;
-  agreements: Invitations;
-  dataPolicyOperations: Invitations;
-  subscriptions: Invitations;
-  chats: Invitations;
-  teams: Invitations;
-  teamsTemplates: Invitations;
-  auditLogs: Invitations;
-  authenticationMethodsPolicy: Invitations;
-  identity: Invitations;
-  branding: Invitations;
-  directory: Invitations;
-  me: Invitations;
-  policies: Invitations;
-  education: Invitations;
-  drive: Invitations;
-  communications: Invitations;
-  identityGovernance: Invitations;
-  deviceAppManagement: Invitations;
-  deviceManagement: Invitations;
-  reports: Invitations;
-  search: Invitations;
-  planner: Invitations;
-  print: Invitations;
-  security: Invitations;
-  appCatalogs: Invitations;
-  teamwork: Invitations;
-  informationProtection: Invitations;
-}
-
-export interface Invitations {
+  links: any[];
 }
 
 export interface Server {

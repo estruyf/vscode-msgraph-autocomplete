@@ -1,5 +1,6 @@
 /**
  * Credits for this code to Graph Explorer
+ * https://github.com/microsoftgraph/microsoft-graph-explorer-v4
  */
 
 const ALL_ALPHA_REGEX = /^[a-z]+$/i;
@@ -25,6 +26,11 @@ export function isFunctionCall(segment: string): boolean {
   return FUNCTION_CALL_REGEX.test(segment);
 }
 
+/**
+ * Clear out any users/files/...
+ * @param apiPath query url to be sanitized e.g. https://graph.microsoft.com/v1.0/users/{user-id}
+ * @returns 
+ */
 export function sanitizePath(apiPath: string) {
   apiPath = apiPath.startsWith("/") ? apiPath.substring(1) : apiPath;
   const urlSegments = apiPath.split('/');
@@ -35,6 +41,14 @@ export function sanitizePath(apiPath: string) {
   return `/${apiPath}`;
 }
 
+/**
+ * Skipped segments:
+ * - Entities, entity sets and navigation properties, expected to contain alphabetic letters only
+ * - Deprecated entities in the form <entity>_v2
+ * The remaining URL segments are assumed to be variables that need to be sanitized
+ * @param previousSegment
+ * @param segment
+ */
 export function sanitizePathSegment(previousSegment: string, segment: string): string {
   const segmentsToIgnore = ['$value', '$count', '$ref'];
 
