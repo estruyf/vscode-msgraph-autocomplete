@@ -5,13 +5,12 @@ import { AutoCompleteProvider } from './providers/AutoCompleteProvider';
 import { AutoComplete } from './utils/AutoComplete';
 
 export async function activate(context: vscode.ExtensionContext) {
-	const initData = await AutoComplete.get("/");
 
 	const selector : vscode.DocumentSelector = [{
 		pattern: '**'
 	}];
 
-	const disposable = vscode.languages.registerCompletionItemProvider(selector, new AutoCompleteProvider(context, initData), '/', '?', '&', '=', ',');
+	const disposable = vscode.languages.registerCompletionItemProvider(selector, new AutoCompleteProvider(context), '/', '?', '&', '=', ',');
 
 	const clearCache = vscode.commands.registerCommand('msgraph.autocomplete.clearCache', async () => {
 		const cache: CacheProvider = CacheProvider.getInstance(context, "name");

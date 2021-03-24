@@ -13,13 +13,11 @@ export class AutoCompleteProvider implements CompletionItemProvider {
   private values: Value[] = [];
   private cache: CacheProvider;
   
-  constructor(context: ExtensionContext, rootData: OpenApiType | null) {
-    this.cache = CacheProvider.getInstance(context, "cache", {
-      v1: {
-        "/": rootData
-      },
-      beta: {}
-    });
+  constructor(context: ExtensionContext) {
+    this.cache = CacheProvider.getInstance(context, "cache", { v1: {}, beta: {} });
+
+    // When initialized, do the default API calls instead of doing this on startup
+    this.getPaths(true, "/");
   }
 
   /**

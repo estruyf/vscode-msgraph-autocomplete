@@ -1,5 +1,9 @@
 # Change Log
 
+## [0.0.4]
+
+- Faster extension activation by removing an async call on startup
+
 ## [0.0.3]
 
 - Speed improvement by leveraging the `globalState` from VSCode for caching
