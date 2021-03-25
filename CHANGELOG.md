@@ -4,7 +4,7 @@
 
 - License added
 - Increased cache expiration to five days
-- Changed the `{user-id}` snippet so that you can immediatly enter your user ID or UPN
+- Changed the `{user-id}` snippet so that you can immediately enter your user ID or UPN
 
 ## [0.0.4]
 
