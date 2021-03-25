@@ -1,5 +1,11 @@
 # Change Log
 
+## [0.0.5]
+
+- License added
+- Increased cache expiration to five days
+- Changed the `{user-id}` snippet so that you can immediatly enter your user ID or UPN
+
 ## [0.0.4]
 
 - Faster extension activation by removing an async call on startup

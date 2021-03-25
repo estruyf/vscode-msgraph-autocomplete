@@ -1,8 +1,8 @@
 import { OpenApiParser } from './../utils/OpenApiParser';
 const url = require('native-url');
-import { CancellationToken, CompletionItem, CompletionItemKind, CompletionItemProvider, Position, TextDocument } from 'vscode';
+import { CancellationToken, CompletionItem, CompletionItemKind, CompletionItemProvider, MarkdownString, Position, SnippetString, TextDocument } from 'vscode';
 import { PATH_BETA, PATH_V1 } from '../constants';
-import { Suggestion, OpenApiType, OpenApiResponse, Value } from '../models';
+import { Suggestion, OpenApiResponse, Value } from '../models';
 import { AutoComplete } from '../utils/AutoComplete';
 import { sanitizePath } from '../utils/SanitizePathSegments';
 import { CacheProvider } from './CacheProvider';
@@ -72,8 +72,9 @@ export class AutoCompleteProvider implements CompletionItemProvider {
     return suggestions.map(s => {
       const suggestion = new CompletionItem(s.value, s.completion || CompletionItemKind.Value);
       if (s.description) {
-        suggestion.detail = s.description;
+        suggestion.documentation = new MarkdownString(s.description);
       }
+      suggestion.insertText = s.text || s.value;
       return suggestion;
     });
   }
@@ -91,7 +92,12 @@ export class AutoCompleteProvider implements CompletionItemProvider {
       this.lastApiPath = path;
 
       if (path === "/users/") {
-        suggestions.push({ description: "Provide your user ID or username", value: "{users-id}", completion: CompletionItemKind.Keyword });
+        suggestions.push({ 
+          description: "Provide your `user ID` or `UPN`", 
+          value: "{users-id}",
+          text: new SnippetString('${1:"Enter your user ID or UPN"}'),
+          completion: CompletionItemKind.Keyword
+        });
       }
 
       let apiPath = path;

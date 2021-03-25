@@ -14,7 +14,7 @@ Start typing `https://graph.microsoft.com/`, and you will automatically get sugg
 
 #### MS Graph: Clear autocomplete cache
 
-By default, the cached data persists for 8 hours. If you want, you can always clear the cache by using the *MS Graph: Clear autocomplete cache* (`msgraph.autocomplete.clearCache`) command.
+By default, the cached data persists for 5 days. If you want, you can always clear the cache by using the *MS Graph: Clear autocomplete cache* (`msgraph.autocomplete.clearCache`) command.
 
 ![](./assets/clear-cache.png)
 

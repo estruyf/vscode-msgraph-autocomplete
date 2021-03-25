@@ -57,9 +57,9 @@ export class CacheProvider {
    */
   public async put(version: string, path: string, apiData: any, expiration?: Date) {
     if (typeof expiration === "undefined") {
-      // Create expiration date - 8 hour
+      // Create expiration date - 5 days
       expiration = new Date();
-      expiration.setTime(expiration.getTime() + 8 * 3600000);
+      expiration.setTime(expiration.getTime() + 5 * 24 * 3600000);
     }
 
     apiData.expiration = expiration;

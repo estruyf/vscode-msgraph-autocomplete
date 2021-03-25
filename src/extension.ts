@@ -2,7 +2,6 @@ import { CacheProvider } from './providers/CacheProvider';
 import * as vscode from 'vscode';
 import { EXTENSION_NAME } from './constants';
 import { AutoCompleteProvider } from './providers/AutoCompleteProvider';
-import { AutoComplete } from './utils/AutoComplete';
 
 export async function activate(context: vscode.ExtensionContext) {
 
