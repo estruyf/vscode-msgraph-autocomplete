@@ -1,12 +1,13 @@
 import { OpenApiParser } from './../utils/OpenApiParser';
 const url = require('native-url');
-import { CancellationToken, CompletionItem, CompletionItemKind, CompletionItemProvider, MarkdownString, Position, SnippetString, TextDocument } from 'vscode';
-import { PATH_BETA, PATH_V1 } from '../constants';
+import { CancellationToken, CompletionItem, CompletionItemKind, CompletionItemProvider, MarkdownString, Position, TextDocument } from 'vscode';
+import { MS_GRAPH, PATH_BETA, PATH_V1 } from '../constants';
 import { Suggestion, OpenApiResponse, Value } from '../models';
 import { AutoComplete } from '../utils/AutoComplete';
 import { sanitizePath } from '../utils/SanitizePathSegments';
 import { CacheProvider } from './CacheProvider';
 import { ExtensionContext } from 'vscode';
+import { GraphTokens } from '../utils';
 
 export class AutoCompleteProvider implements CompletionItemProvider {
   private lastApiPath: string = "";
@@ -38,7 +39,7 @@ export class AutoCompleteProvider implements CompletionItemProvider {
     const beta = currentLine.toLowerCase().includes(`/${PATH_BETA}/`);
 
     if (!v1 && !beta) {
-      if (currentLine.toLowerCase().includes("https://graph.microsoft.com/")) {
+      if (currentLine.toLowerCase().includes(MS_GRAPH)) {
         return [
           new CompletionItem(`${PATH_V1}`, CompletionItemKind.Value),
           new CompletionItem(`${PATH_BETA}`, CompletionItemKind.Value)
@@ -91,14 +92,7 @@ export class AutoCompleteProvider implements CompletionItemProvider {
     if (path) {
       this.lastApiPath = path;
 
-      if (path === "/users/") {
-        suggestions.push({ 
-          description: "Provide your `user ID` or `UPN`", 
-          value: "{users-id}",
-          text: new SnippetString('${1:"Enter your user ID or UPN"}'),
-          completion: CompletionItemKind.Keyword
-        });
-      }
+      suggestions = GraphTokens.getSuggestions(path);
 
       let apiPath = path;
       if (apiPath !== "/") {
