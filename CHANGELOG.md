@@ -1,5 +1,9 @@
 # Change Log
 
+## [0.0.10]
+
+- Adding all tokens via their full path to the `tokens.json` file
+
 ## [0.0.9]
 
 - The `tokens.json` file gets automatically generated during the extension build

@@ -16,8 +16,7 @@ export class GraphTokens {
       path = path.substring(0, path.length -1);
     }
 
-    const lastPath = path.split('/').pop() as string;
-    const foundPath = tokens.find(t => t.path.toLowerCase() === lastPath.toLowerCase());
+    const foundPath = tokens.find(t => t.path.toLowerCase() === path.toLowerCase());
     if (foundPath) {
       suggestions.push({ 
         description: foundPath.description, 

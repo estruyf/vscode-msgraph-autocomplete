@@ -74,22 +74,23 @@ const getData = async (version, path, cache) => {
         const segments = path.split("/");
 
         if (pathDetails?.get) {
-          segments.forEach((segment, index) => {
-            const token = tokens.find(t => t.path === segments[index - 1]);
-            if (!token) {
-              if (segment.startsWith("{") && segment.endsWith("}")) {
-                const name = segment.substring(1, segment.length - 1);
-                const parameter = pathDetails.get.parameters.find(p => p.name === name);
+          const lastSegment = segments[segments.length - 1];
+          if (lastSegment.startsWith("{") && lastSegment.endsWith("}")) {
 
-                tokens.push({
-                  "path": segments[index - 1],
-                  "description": parameter?.description || "", 
-                  "value": segment,
-                  "snippetText": parameter?.description || name
-                });
-              }
+            const path = segments.filter(s => s !== lastSegment).join("/");
+            const token = tokens.find(t => t.path === path);
+            if (!token) {
+              const name = lastSegment.substring(1, lastSegment.length - 1);
+              const parameter = pathDetails.get.parameters.find(p => p.name === name);
+
+              tokens.push({
+                "path": path,
+                "description": parameter?.description || "", 
+                "value": lastSegment,
+                "snippetText": parameter?.description || name
+              });
             }
-          });
+          }
         }
       }
 
