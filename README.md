@@ -10,6 +10,12 @@ This VSCode extension allows you to auto-complete the Microsoft Graph API URLs y
 
 Start typing `https://graph.microsoft.com/`, and you will automatically get suggestions to autocomplete the URL with API paths, query string parameters, and values.
 
+### Tokens
+
+The extension lets you know when you can insert values like the `user ID`, `UPN`, `group ID`, and more. It will do this for the known paths which are registered in the [tokens.json](./src/tokens.json) file. If you have an path where a certain token/value is missing. Feel free to add it to the `JSON` file.
+
+![](./assets/user-id.gif)
+
 ### Commands
 
 #### MS Graph: Clear autocomplete cache
@@ -32,6 +38,6 @@ Please submit them via creating an issue in the project repository: [issue list]
 
 <p align="center">
   <a href="#">
-      <img src="http://estruyf-github.azurewebsites.net/api/VisitorHit?user=estruyf&repo=vscode-msgraph-autocomplete&countColor=%23161938" />
+      <img src="https://estruyf-github.azurewebsites.net/api/VisitorHit?user=estruyf&repo=vscode-msgraph-autocomplete&countColor=%23161938" />
    </a>
 </p>

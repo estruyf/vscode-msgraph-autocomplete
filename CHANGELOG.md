@@ -1,5 +1,9 @@
 # Change Log
 
+## [0.0.7]
+
+- Added `tokens.json` with all paths and their corresponding tokens
+
 ## [0.0.6]
 
 - [#2](https://github.com/estruyf/vscode-msgraph-autocomplete/issues/2) - Included more MS Graph token support
