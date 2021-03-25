@@ -12,9 +12,11 @@ Start typing `https://graph.microsoft.com/`, and you will automatically get sugg
 
 ### Tokens
 
-The extension lets you know when you can insert values like the `user ID`, `UPN`, `group ID`, and more. It will do this for the known paths which are registered in the [tokens.json](./src/tokens.json) file. If you have an path where a certain token/value is missing. Feel free to add it to the `JSON` file.
+The extension lets you know when you can insert values like the `user ID`, `UPN`, `group ID`, and more. It will do this for the known paths which are registered in the [tokens.json](./src/tokens.json) file.
 
 ![](./assets/user-id.gif)
+
+> **Info**: The `tokens.json` file is automatically updated during the release process of the extension.
 
 ### Commands
 
