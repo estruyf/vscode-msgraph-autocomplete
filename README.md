@@ -29,3 +29,9 @@ If you find this a useful extension and want to see more functionalities added. 
 ## Feedback / issues / ideas
 
 Please submit them via creating an issue in the project repository: [issue list](https://github.com/estruyf/vscode-msgraph-autocomplete/issues).
+
+<p align="center">
+  <a href="#">
+      <img src="http://estruyf-github.azurewebsites.net/api/VisitorHit?user=estruyf&repo=vscode-msgraph-autocomplete&countColor=%23161938" />
+   </a>
+</p>
