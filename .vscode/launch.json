@@ -6,6 +6,15 @@
 	"version": "0.2.0",
 	"configurations": [
 		{
+			"name": "Populate cache",
+			"program": "${workspaceFolder}/scripts/populate-cache.js",
+			"request": "launch",
+			"skipFiles": [
+				"<node_internals>/**"
+			],
+			"type": "pwa-node"
+		},
+		{
 			"name": "Run Extension",
 			"type": "extensionHost",
 			"request": "launch",

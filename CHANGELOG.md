@@ -1,5 +1,9 @@
 # Change Log
 
+## [0.0.8]
+
+- Pre-populate the cache during the extension release
+
 ## [0.0.7]
 
 - Added `tokens.json` with all paths and their corresponding tokens

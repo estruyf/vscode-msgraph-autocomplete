@@ -1,5 +1,6 @@
 import { ExtensionContext } from 'vscode';
 import { EXTENSION_NAME } from '../constants';
+const preCache: any = require('../cache.json');
 
 interface CacheObject { [version: string]: { [path: string]: any } }
 
@@ -35,6 +36,10 @@ export class CacheProvider {
    */
   public async get(version: string, path: string) {
     try {
+      if (preCache && preCache[version] && preCache[version][path]) {
+        return preCache[version][path];
+      }
+
       if (this.cache[version] && this.cache[version][path]) {
         if (!this.isExpired(this.cache[version][path].expiration)) {
           return this.cache[version][path];

@@ -1,13 +1,9 @@
-import { OpenApiParser } from './../utils/OpenApiParser';
 const url = require('native-url');
-import { CancellationToken, CompletionItem, CompletionItemKind, CompletionItemProvider, MarkdownString, Position, TextDocument } from 'vscode';
+import { CancellationToken, CompletionItem, CompletionItemKind, CompletionItemProvider, MarkdownString, Position, TextDocument, ExtensionContext } from 'vscode';
 import { MS_GRAPH, PATH_BETA, PATH_V1 } from '../constants';
 import { Suggestion, OpenApiResponse, Value } from '../models';
-import { AutoComplete } from '../utils/AutoComplete';
-import { sanitizePath } from '../utils/SanitizePathSegments';
 import { CacheProvider } from './CacheProvider';
-import { ExtensionContext } from 'vscode';
-import { GraphTokens } from '../utils';
+import { AutoComplete, GraphTokens, OpenApiParser, sanitizePath } from '../utils';
 
 export class AutoCompleteProvider implements CompletionItemProvider {
   private lastApiPath: string = "";
@@ -16,9 +12,6 @@ export class AutoCompleteProvider implements CompletionItemProvider {
   
   constructor(context: ExtensionContext) {
     this.cache = CacheProvider.getInstance(context, "cache", { v1: {}, beta: {} });
-
-    // When initialized, do the default API calls instead of doing this on startup
-    this.getPaths(true, "/");
   }
 
   /**
