@@ -6,7 +6,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  build_and_release:
+  build:
+    name: "Build and release"
     runs-on: ubuntu-latest
 
     steps:
