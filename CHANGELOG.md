@@ -1,5 +1,9 @@
 # Change Log
 
+## [0.0.9]
+
+- The `tokens.json` file gets automatically generated during the extension build
+
 ## [0.0.8]
 
 - Pre-populate the cache during the extension release
