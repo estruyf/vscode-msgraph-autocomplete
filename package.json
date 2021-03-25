@@ -3,7 +3,7 @@
 	"displayName": "MS Graph Completion",
 	"description": "This VSCode extension allows you to auto-complete the Microsoft Graph API URLs you are writing. The extension does this by the help of the APIs behind the Microsoft Graph Explorer.",
 	"icon": "assets/logo.png",
-	"version": "0.0.9",
+	"version": "0.0.10",
 	"preview": true,
 	"publisher": "eliostruyf",
 	"galleryBanner": {
