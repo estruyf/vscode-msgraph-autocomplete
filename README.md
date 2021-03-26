@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://marketplace.visualstudio.com/items?itemName=eliostruyf.vscode-msgraph-autocomplete">
-    <img alt="Doctor" src="./assets/logo.png" height="200">
+    <img alt="Doctor" src="./assets/logo-big.png" height="200">
   </a>
 </p>
 
