@@ -14,6 +14,8 @@
   <img src="https://vsmarketplacebadge.apphb.com/installs/eliostruyf.vscode-msgraph-autocomplete.svg" alt="Number of installs"  style="display: inline-block;margin-left:10px" />
   
   <img src="https://vsmarketplacebadge.apphb.com/rating/eliostruyf.vscode-msgraph-autocomplete.svg" alt="Ratings" style="display: inline-block;margin-left:10px" />
+
+  <img src="https://github.com/estruyf/vscode-msgraph-autocomplete/actions/workflows/api-tests.yml/badge.svg" alt="Verify the APIs" style="display: inline-block;margin-left:10px" />
 </p>
 
 This VSCode extension allows you to auto-complete the Microsoft Graph API URLs you are writing. You get the most useful Microsoft Graph Explorer functionality in your favorite editor.
