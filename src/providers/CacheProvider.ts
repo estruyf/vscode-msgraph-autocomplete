@@ -1,12 +1,13 @@
 import { ExtensionContext } from 'vscode';
-import { EXTENSION_NAME } from '../constants';
-const preCache: any = require('../cache.json');
+import { EXTENSION_NAME, FILE_CACHE } from '../constants';
+import { unzipJsonFile } from '../utils';
 
 interface CacheObject { [version: string]: { [path: string]: any } }
 
 export class CacheProvider {
   private readonly cacheName = `${EXTENSION_NAME}`;
   private static instance: CacheProvider;
+  private preCache: CacheObject | null = null;
   private cache: CacheObject = {};
 
   private constructor (private context: ExtensionContext, name: string, defaultData: any) {
@@ -36,8 +37,12 @@ export class CacheProvider {
    */
   public async get(version: string, path: string) {
     try {
-      if (preCache && preCache[version] && preCache[version][path]) {
-        return preCache[version][path];
+      if (!this.preCache) {
+        this.preCache = await unzipJsonFile(FILE_CACHE);
+      }
+
+      if (this.preCache && this.preCache[version] && this.preCache[version][path]) {
+        return this.preCache[version][path];
       }
 
       if (this.cache[version] && this.cache[version][path]) {

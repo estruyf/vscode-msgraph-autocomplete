@@ -1,0 +1,23 @@
+name: Verify APIs
+
+on:
+  schedule:
+    - cron:  '0 */6 * * *'
+
+jobs:
+  test:
+    name: "Run tests"
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14
+          registry-url: https://registry.npmjs.org/
+
+      - name: Install the dependencies
+        run: npm i
+
+      - name: Test API
+        run: npm run test:api

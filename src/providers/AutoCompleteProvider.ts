@@ -85,7 +85,7 @@ export class AutoCompleteProvider implements CompletionItemProvider {
     if (path) {
       this.lastApiPath = path;
 
-      suggestions = GraphTokens.getSuggestions(path);
+      suggestions = await GraphTokens.getSuggestions(path);
 
       let apiPath = path;
       if (apiPath !== "/") {
@@ -109,7 +109,12 @@ export class AutoCompleteProvider implements CompletionItemProvider {
       }
 
       if (parsedApiData && parsedApiData.parameters && parsedApiData.parameters.length > 0) {
-        suggestions = [...suggestions, ...parsedApiData.parameters[0].links.map(l => ApiSuggestion.get(apiPath, l))];
+        const links = parsedApiData.parameters[0].links;
+        const tokens: Suggestion[] = [];
+        for (const link of links) {
+          tokens.push(await ApiSuggestion.get(apiPath, link));
+        }
+        suggestions = [...suggestions, ...tokens];
       }
     }
 

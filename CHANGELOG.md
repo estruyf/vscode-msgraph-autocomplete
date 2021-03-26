@@ -1,5 +1,11 @@
 # Change Log
 
+## [0.0.12]
+
+- Implemented `gzip` for compressing the cached files
+- Implemented API tests to validate API changes
+- Show method descriptions
+
 ## [0.0.11]
 
 - Enhanced the internal cache with the API methods

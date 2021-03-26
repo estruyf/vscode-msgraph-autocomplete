@@ -3,9 +3,9 @@ const fetch = require('node-fetch');
 const fs = require('fs');
 const path = require('path');
 const YAML = require('yamljs');
+const { gzip } = require('node-gzip');
 
-
-const MS_GRAPH_API = "https://graphexplorerapi.azurewebsites.net/openapi?style=geautocomplete";
+const MS_GRAPH_API = "https://graphexplorerapi.azurewebsites.net/openapi?openapiversion=3&style=geautocomplete";
 const MS_GRAPH_METADATA = "https://raw.githubusercontent.com/microsoftgraph/msgraph-metadata/master/openapi/v1.0/openapi.yaml";
 
 
@@ -51,6 +51,11 @@ const getData = async (version, path, cache) => {
     const apiData = await data.json();
 
     if (apiData) {
+      for (const key of Object.keys(apiData)) {
+        if (["paths"].indexOf(key) === -1) {
+          delete apiData[key];
+        }
+      }
       cache[version === "v1.0" ? "v1" : "beta"][path] = apiData;
     }
   }
@@ -77,7 +82,10 @@ const getData = async (version, path, cache) => {
 
       apis.push({
         path,
-        methods: Object.keys(pathDetails)
+        methods: Object.keys(pathDetails).map(name => ({
+          name,
+          description: pathDetails[name].summary
+        }))
       });
 
       if (pathDetails?.get) {
@@ -91,11 +99,14 @@ const getData = async (version, path, cache) => {
             const parameter = pathDetails.get.parameters.find(p => p.name === name);
 
             tokens.push({
-              "path": path,
-              "description": parameter?.description || "", 
-              "value": lastSegment,
-              "snippetText": parameter?.description || name,
-              "methods": Object.keys(pathDetails)
+              path: path,
+              description: parameter?.description || "", 
+              value: lastSegment,
+              snippetText: parameter?.description || name,
+              methods: Object.keys(pathDetails).map(name => ({
+                name,
+                description: pathDetails[name].summary
+              }))
             });
           }
         }
@@ -103,10 +114,10 @@ const getData = async (version, path, cache) => {
     }
 
     if (tokens && tokens.length > 0) {
-      fs.writeFileSync(path.join(__dirname, '../src/tokens.json'), JSON.stringify(tokens, null, 2), { encoding: "utf-8" });
+      fs.writeFileSync(path.join(__dirname, '../tokens.json.gz'), await gzip(JSON.stringify(tokens)), { encoding: "utf-8" });
     }
     if (apis && apis.length > 0) {
-      fs.writeFileSync(path.join(__dirname, '../src/apis.json'), JSON.stringify(apis, null, 2), { encoding: "utf-8" });
+      fs.writeFileSync(path.join(__dirname, '../apis.json.gz'), await gzip(JSON.stringify(apis)), { encoding: "utf-8" });
     }
   }
 
@@ -127,5 +138,5 @@ const getData = async (version, path, cache) => {
     }
   }
 
-  fs.writeFileSync(path.join(__dirname, '../src/cache.json'), JSON.stringify(cacheData), { encoding: "utf-8" });
+  fs.writeFileSync(path.join(__dirname, '../cache.json.gz'), await gzip(JSON.stringify(cacheData)), { encoding: "utf-8" });
 })();

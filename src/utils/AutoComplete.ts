@@ -11,7 +11,7 @@ export class AutoComplete {
       
       const data = await fetch(apiUrl, {
         headers: {
-          "accept": "application/json"
+          "accept": "application/plain"
         }
       });
       
