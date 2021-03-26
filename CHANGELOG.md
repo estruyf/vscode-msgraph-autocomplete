@@ -1,5 +1,11 @@
 # Change Log
 
+## [0.0.11]
+
+- Enhanced the internal cache with the API methods
+- Added support to show API methods per API
+- Added support to show API methods for APIs with tokens
+
 ## [0.0.10]
 
 - Adding all tokens via their full path to the `tokens.json` file
