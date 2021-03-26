@@ -19,7 +19,15 @@ const getOpenApiMetadata = async () => {
   });
 
   if (data && data.ok) {
-    return await data.text();
+    const metadata = await data.text();
+
+    fs.writeFileSync(path.join(__dirname, '../metadata.yml'), metadata, { encoding: "utf-8" });
+
+    const metadataJson = YAML.parse(metadata);
+
+    fs.writeFileSync(path.join(__dirname, '../metadata.json'), JSON.stringify(metadataJson, null, 2), { encoding: "utf-8" });
+
+    return metadataJson;
   }
 
   return null;
@@ -57,46 +65,48 @@ const getData = async (version, path, cache) => {
   let cacheData = { "v1": {}, "beta": {} };
 
   // Retrieving metadata
-  const metadata = await getOpenApiMetadata();
-  if (metadata) {
-    fs.writeFileSync(path.join(__dirname, '../metadata.yml'), metadata, { encoding: "utf-8" });
+  const metadataJson = await getOpenApiMetadata();
+  if (metadataJson && metadataJson.paths) {
+    let tokens = [];
+    let apis = [];
+    const { paths } = metadataJson;
 
-    const metadataJson = YAML.parse(metadata);
+    for (const path in paths) {
+      const pathDetails = paths[path];
+      const segments = path.split("/");
 
-    fs.writeFileSync(path.join(__dirname, '../metadata.json'), JSON.stringify(metadataJson, null, 2), { encoding: "utf-8" });
+      apis.push({
+        path,
+        methods: Object.keys(pathDetails)
+      });
 
-    if (metadataJson && metadataJson.paths) {
-      let tokens = [];
-      const { paths } = metadataJson;
+      if (pathDetails?.get) {
+        const lastSegment = segments[segments.length - 1];
+        if (lastSegment.startsWith("{") && lastSegment.endsWith("}")) {
 
-      for (const path in paths) {
-        const pathDetails = paths[path];
-        const segments = path.split("/");
+          const path = segments.filter(s => s !== lastSegment).join("/");
+          const token = tokens.find(t => t.path === path);
+          if (!token) {
+            const name = lastSegment.substring(1, lastSegment.length - 1);
+            const parameter = pathDetails.get.parameters.find(p => p.name === name);
 
-        if (pathDetails?.get) {
-          const lastSegment = segments[segments.length - 1];
-          if (lastSegment.startsWith("{") && lastSegment.endsWith("}")) {
-
-            const path = segments.filter(s => s !== lastSegment).join("/");
-            const token = tokens.find(t => t.path === path);
-            if (!token) {
-              const name = lastSegment.substring(1, lastSegment.length - 1);
-              const parameter = pathDetails.get.parameters.find(p => p.name === name);
-
-              tokens.push({
-                "path": path,
-                "description": parameter?.description || "", 
-                "value": lastSegment,
-                "snippetText": parameter?.description || name
-              });
-            }
+            tokens.push({
+              "path": path,
+              "description": parameter?.description || "", 
+              "value": lastSegment,
+              "snippetText": parameter?.description || name,
+              "methods": Object.keys(pathDetails)
+            });
           }
         }
       }
+    }
 
-      if (tokens && tokens.length > 0) {
-        fs.writeFileSync(path.join(__dirname, '../src/tokens.json'), JSON.stringify(tokens, null, 2), { encoding: "utf-8" });
-      }
+    if (tokens && tokens.length > 0) {
+      fs.writeFileSync(path.join(__dirname, '../src/tokens.json'), JSON.stringify(tokens, null, 2), { encoding: "utf-8" });
+    }
+    if (apis && apis.length > 0) {
+      fs.writeFileSync(path.join(__dirname, '../src/apis.json'), JSON.stringify(apis, null, 2), { encoding: "utf-8" });
     }
   }
 

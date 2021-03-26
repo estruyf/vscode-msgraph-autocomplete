@@ -18,6 +18,18 @@ The extension lets you know when you can insert values like the `user ID`, `UPN`
 
 > **Info**: The `tokens.json` file is automatically updated during the release process of the extension.
 
+### Method(s)
+
+During the build and release process of the extension, it fetches the metadata from Microsoft Graph and creates a library of known API endpoints. With this library, the extension is able to show you which API methods are available per endpoint.
+
+![](./assets/methods-path.png)
+
+The extension does this as well for the endpoints with tokens:
+
+![](./assets/methods-tokens.png)
+
+![](./assets/methods-tokens-path.png)
+
 ### Commands
 
 #### MS Graph: Clear autocomplete cache

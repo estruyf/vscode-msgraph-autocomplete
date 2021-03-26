@@ -1,3 +1,4 @@
+import pluralize = require("pluralize");
 import { CompletionItemKind, SnippetString } from "vscode";
 import { Suggestion } from "../models";
 import tokens = require('../tokens.json');
@@ -19,7 +20,11 @@ export class GraphTokens {
     const foundPath = tokens.find(t => t.path.toLowerCase() === path.toLowerCase());
     if (foundPath) {
       suggestions.push({ 
-        description: foundPath.description, 
+        description: `### ${foundPath.value}
+
+${foundPath.description}${foundPath.methods && foundPath.methods.length > 0 ? `
+
+Supported ${pluralize(`method`, foundPath.methods.length)}: ${foundPath.methods.map(m => m.toUpperCase()).join(', ')}` : ''}`, 
         value: foundPath.value,
         text: new SnippetString(`\${1:"${foundPath.snippetText}"}`),
         completion: CompletionItemKind.Keyword

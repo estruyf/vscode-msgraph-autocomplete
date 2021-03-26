@@ -3,6 +3,8 @@
  * https://github.com/microsoftgraph/microsoft-graph-explorer-v4
  */
 
+import pluralize = require("pluralize");
+
 const ALL_ALPHA_REGEX = /^[a-z]+$/i;
 // Matches strings with deprecation identifier
 const DEPRECATION_REGEX = /^[a-z]+_v2$/gi;
@@ -76,5 +78,5 @@ export function sanitizePathSegment(previousSegment: string, segment: string): s
     previousSegment = 'unknown';
   }
 
-  return `{${previousSegment}-id}`;
+  return `{${pluralize.singular(previousSegment)}-id}`;
 }

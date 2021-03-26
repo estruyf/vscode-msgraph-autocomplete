@@ -77,13 +77,15 @@
 		"test-watch": "tsc -watch -p ./",
 		"pretest": "npm run test-compile && npm run lint",
 		"lint": "eslint src --ext ts",
-		"test": "node ./out/test/runTest.js"
+		"test": "node ./out/test/runTest.js",
+		"cache": "node ./scripts/populate-cache.js"
 	},
 	"devDependencies": {
 		"@types/glob": "^7.1.3",
 		"@types/mocha": "^8.0.4",
 		"@types/node": "^12.11.7",
 		"@types/node-fetch": "2.5.8",
+		"@types/pluralize": "0.0.29",
 		"@types/vscode": "^1.54.0",
 		"@typescript-eslint/eslint-plugin": "^4.14.1",
 		"@typescript-eslint/parser": "^4.14.1",
@@ -99,6 +101,7 @@
 	},
 	"dependencies": {
 		"native-url": "0.3.4",
-		"node-fetch": "2.6.1"
+		"node-fetch": "2.6.1",
+		"pluralize": "8.0.0"
 	}
 }

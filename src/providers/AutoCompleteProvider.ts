@@ -3,7 +3,7 @@ import { CancellationToken, CompletionItem, CompletionItemKind, CompletionItemPr
 import { MS_GRAPH, PATH_BETA, PATH_V1 } from '../constants';
 import { Suggestion, OpenApiResponse, Value } from '../models';
 import { CacheProvider } from './CacheProvider';
-import { AutoComplete, GraphTokens, OpenApiParser, sanitizePath } from '../utils';
+import { AutoComplete, GraphTokens, OpenApiParser, sanitizePath, ApiSuggestion } from '../utils';
 
 export class AutoCompleteProvider implements CompletionItemProvider {
   private lastApiPath: string = "";
@@ -109,7 +109,7 @@ export class AutoCompleteProvider implements CompletionItemProvider {
       }
 
       if (parsedApiData && parsedApiData.parameters && parsedApiData.parameters.length > 0) {
-        suggestions = [...suggestions, ...parsedApiData.parameters[0].links.map(l => ({ description: "", value: l }))];
+        suggestions = [...suggestions, ...parsedApiData.parameters[0].links.map(l => ApiSuggestion.get(apiPath, l))];
       }
     }
 
