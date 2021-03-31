@@ -65,6 +65,7 @@ export const rootData = {
               "me": { },
               "policies": { },
               "education": { },
+              "roleManagement": { },
               "drive": { },
               "communications": { },
               "identityGovernance": { },
