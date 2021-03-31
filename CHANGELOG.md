@@ -1,5 +1,9 @@
 # Change Log
 
+## [0.0.13]
+
+- Update to support the latest `v1.0` APIs
+
 ## [0.0.12]
 
 - Implemented `gzip` for compressing the cached files
