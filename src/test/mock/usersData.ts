@@ -22,11 +22,10 @@ export const usersData = {
           {
             "name": "ConsistencyLevel",
             "in": "header",
-            "description": "Indicates the requested consistency level.",
+            "description": "Indicates the requested consistency level. Documentation URL: https://developer.microsoft.com/en-us/office/blogs/microsoft-graph-advanced-queries-for-directory-objects-are-now-generally-available/",
             "schema": {
               "type": "string"
             },
-            "example": "https://developer.microsoft.com/en-us/office/blogs/microsoft-graph-advanced-queries-for-directory-objects-are-now-generally-available/",
             "examples": {
               "example-1": {
                 "description": "$search and $count queries require the client to set the ConsistencyLevel HTTP header to 'eventual'.",

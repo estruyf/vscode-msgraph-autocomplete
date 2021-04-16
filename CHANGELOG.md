@@ -1,5 +1,9 @@
 # Change Log
 
+## [1.0.0]
+
+- Updated tests and first release
+
 ## [0.0.13]
 
 - Update to support the latest `v1.0` APIs
