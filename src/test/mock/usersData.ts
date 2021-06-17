@@ -22,11 +22,10 @@ export const usersData = {
           {
             "name": "ConsistencyLevel",
             "in": "header",
-            "description": "Indicates the requested consistency level.",
+            "description": "Indicates the requested consistency level. Documentation URL: https://developer.microsoft.com/en-us/office/blogs/microsoft-graph-advanced-queries-for-directory-objects-are-now-generally-available/",
             "schema": {
               "type": "string"
             },
-            "example": "https://developer.microsoft.com/en-us/office/blogs/microsoft-graph-advanced-queries-for-directory-objects-are-now-generally-available/",
             "examples": {
               "example-1": {
                 "description": "$search and $count queries require the client to set the ConsistencyLevel HTTP header to 'eventual'.",
@@ -45,15 +44,6 @@ export const usersData = {
             "example": 50
           },
           {
-            "name": "$skip",
-            "in": "query",
-            "description": "Skip the first n items",
-            "schema": {
-              "minimum": 0,
-              "type": "integer"
-            }
-          },
-          {
             "name": "$search",
             "in": "query",
             "description": "Search items by search phrases",
@@ -62,27 +52,10 @@ export const usersData = {
             }
           },
           {
-            "name": "$filter",
-            "in": "query",
-            "description": "Filter items by property values",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "$count",
-            "in": "query",
-            "description": "Include count of items",
-            "schema": {
-              "type": "boolean"
-            }
-          },
-          {
             "name": "$orderby",
             "in": "query",
             "description": "Order items by property values",
             "style": "form",
-            "explode": false,
             "schema": {
               "uniqueItems": true,
               "type": "array",
@@ -240,7 +213,6 @@ export const usersData = {
             "in": "query",
             "description": "Select properties to be returned",
             "style": "form",
-            "explode": false,
             "schema": {
               "uniqueItems": true,
               "type": "array",
@@ -359,68 +331,7 @@ export const usersData = {
                   "onlineMeetings",
                   "presence",
                   "authentication",
-                  "joinedTeams",
-                  "teamwork",
-                  "todo"
-                ],
-                "type": "string"
-              }
-            }
-          },
-          {
-            "name": "$expand",
-            "in": "query",
-            "description": "Expand related entities",
-            "style": "form",
-            "explode": false,
-            "schema": {
-              "uniqueItems": true,
-              "type": "array",
-              "items": {
-                "enum": [
-                  "*",
-                  "appRoleAssignments",
-                  "createdObjects",
-                  "directReports",
-                  "licenseDetails",
-                  "manager",
-                  "memberOf",
-                  "oauth2PermissionGrants",
-                  "ownedDevices",
-                  "ownedObjects",
-                  "registeredDevices",
-                  "scopedRoleMemberOf",
-                  "transitiveMemberOf",
-                  "calendar",
-                  "calendarGroups",
-                  "calendars",
-                  "calendarView",
-                  "contactFolders",
-                  "contacts",
-                  "events",
-                  "inferenceClassification",
-                  "mailFolders",
-                  "messages",
-                  "outlook",
-                  "people",
-                  "photo",
-                  "photos",
-                  "drive",
-                  "drives",
-                  "followedSites",
-                  "extensions",
-                  "agreementAcceptances",
-                  "managedDevices",
-                  "managedAppRegistrations",
-                  "deviceManagementTroubleshootingEvents",
-                  "planner",
-                  "insights",
-                  "settings",
-                  "onenote",
-                  "activities",
-                  "onlineMeetings",
-                  "presence",
-                  "authentication",
+                  "chats",
                   "joinedTeams",
                   "teamwork",
                   "todo"

@@ -1,5 +1,9 @@
 # Change Log
 
+## [1.2.0]
+
+- Updated cache to the latest API changes
+
 ## [1.1.0]
 
 - Updated cache to the latest API changes
