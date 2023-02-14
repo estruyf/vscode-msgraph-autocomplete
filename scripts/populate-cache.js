@@ -61,7 +61,7 @@ const getData = async (version, path, cache) => {
   }
 
   return cache;
-}
+};
 
 /**
  * Start building the cache

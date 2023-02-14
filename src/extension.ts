@@ -9,7 +9,7 @@ export async function activate(context: vscode.ExtensionContext) {
 		pattern: '**'
 	}];
 
-	const disposable = vscode.languages.registerCompletionItemProvider(selector, new AutoCompleteProvider(context), '/', '?', '&', '=', ',');
+	const disposable = vscode.languages.registerCompletionItemProvider(selector, new AutoCompleteProvider(context), '/', '?', '&', '=', ',', '-');
 
 	const clearCache = vscode.commands.registerCommand('msgraph.autocomplete.clearCache', async () => {
 		const cache: CacheProvider = CacheProvider.getInstance(context, "name");

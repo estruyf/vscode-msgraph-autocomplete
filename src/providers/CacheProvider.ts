@@ -52,7 +52,7 @@ export class CacheProvider {
           this.put(version, path, null);
         }
       }
-    } catch (e) {
+    } catch (e: any) {
       console.log(e.message);
     }
     return null;

@@ -4,6 +4,7 @@ import { MS_GRAPH, PATH_BETA, PATH_V1 } from '../constants';
 import { Suggestion, OpenApiResponse, Value } from '../models';
 import { CacheProvider } from './CacheProvider';
 import { AutoComplete, GraphTokens, OpenApiParser, sanitizePath, ApiSuggestion } from '../utils';
+import { SnippetProvider } from './SnippetProvider';
 
 export class AutoCompleteProvider implements CompletionItemProvider {
   private lastApiPath: string = "";
@@ -61,6 +62,16 @@ export class AutoCompleteProvider implements CompletionItemProvider {
       } else {
         return [];
       }
+    }
+
+    else if(character === "-"){
+      const splicedPath = currentLine.slice(0,-1);
+      const snippetObject = await SnippetProvider.initialize(splicedPath);
+      const snippet = snippetObject.getSnippet();
+      const snippetCompletionItem = new CompletionItem(snippet);
+      snippetCompletionItem.documentation = snippet;
+      snippetCompletionItem.insertText = "\n" + snippet;
+      return [snippetCompletionItem];
     }
 
     return suggestions.map(s => {
