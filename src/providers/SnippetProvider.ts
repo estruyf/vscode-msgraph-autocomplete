@@ -1,10 +1,19 @@
-import { axiosFetch } from "../utils/AxiosFetch";
+import { nodeFetch } from "../utils/NodeFetch";
 import * as vscode from 'vscode';
 
 interface ISnippetRequestInformation {
     requestUrl: string;
     version: string;
     snippetLanguage: string;
+}
+
+export interface IGeneratedSnippetURL {
+    method: string;
+    url: string;
+    data: string,
+    headers: {
+        [key: string] : string
+    }
 }
 
 export class SnippetProvider {
@@ -48,7 +57,7 @@ export class SnippetProvider {
         return requestUrl;
     };
 
-    private static generateSnippetRequestUrl = (snippetRequestInformation: ISnippetRequestInformation): any => {
+    private static generateSnippetRequestUrl = (snippetRequestInformation: ISnippetRequestInformation): IGeneratedSnippetURL => {
         const { requestUrl, version, snippetLanguage } = snippetRequestInformation;
     
         const method = 'post';
@@ -70,12 +79,12 @@ export class SnippetProvider {
     };
 
 
-    public static async makeSnippetRequest(generatedSnippetUrl: ISnippetRequestInformation): Promise<string>{
-        const response: string= await axiosFetch(generatedSnippetUrl);
+    public static async makeSnippetRequest(generatedSnippetUrl: IGeneratedSnippetURL): Promise<string>{
+        const response: string= await nodeFetch(generatedSnippetUrl);
         return response;
     }
 
-    public getSnippet(){
+    public getSnippet(): string{
         return this.snippet;
     }
 }
