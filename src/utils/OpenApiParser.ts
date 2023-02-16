@@ -21,7 +21,7 @@ export class OpenApiParser {
       });
   
       return { url, parameters };
-    } catch (error) {
+    } catch (error: any) {
       throw new Error(error);
     }
   }

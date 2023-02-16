@@ -31,7 +31,7 @@ const getOpenApiMetadata = async () => {
   }
 
   return null;
-}
+};
 
 /**
  * Retrieves the API response
@@ -61,7 +61,7 @@ const getData = async (version, path, cache) => {
   }
 
   return cache;
-}
+};
 
 /**
  * Start building the cache

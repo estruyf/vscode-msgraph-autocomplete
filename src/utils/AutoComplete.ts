@@ -21,7 +21,7 @@ export class AutoComplete {
       }
 
       return null;
-    } catch (e) {
+    } catch (e: any) {
       console.log(e.message);
       return null;
     }

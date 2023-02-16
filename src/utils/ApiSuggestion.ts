@@ -4,7 +4,7 @@ import pluralize = require('pluralize');
 import { FILE_APIS } from '../constants';
 
 export class ApiSuggestion {
-  private static apis: API[]
+  private static apis: API[];
 
   /**
    * Get the API methods for the current path
@@ -32,7 +32,7 @@ export class ApiSuggestion {
         
 ${api.methods.map((m: any) => `- **${m.name.toUpperCase()}**: ${m.description}`).join(`\n`)}`;
       }
-    } catch (e) {
+    } catch (e: any) {
       console.log(e.message, `Path: ${path}`, `Link: ${link}`);
     }
 
