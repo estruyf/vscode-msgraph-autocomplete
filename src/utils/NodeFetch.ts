@@ -15,7 +15,8 @@ export const nodeFetch = async (args: IGeneratedSnippetURL): Promise<string> => 
             const data = await response.text();
             return data;
         }
-        return '';
+        console.log('Something happened ', response);
+        return response.body.statusText || 'An error occurred while fetching snippet';
     }
     catch (e: any) {
         return 'Error encountered while fetching snippet';

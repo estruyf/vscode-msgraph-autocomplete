@@ -31,7 +31,7 @@ const getOpenApiMetadata = async () => {
   }
 
   return null;
-}
+};
 
 /**
  * Retrieves the API response
