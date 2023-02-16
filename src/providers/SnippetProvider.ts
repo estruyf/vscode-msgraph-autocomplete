@@ -1,4 +1,4 @@
-import { nodeFetch } from "../utils/NodeFetch";
+import { nodeFetch } from "../utils/SnippetNodeFetch";
 import * as vscode from 'vscode';
 
 interface ISnippetRequestInformation {
@@ -79,7 +79,7 @@ export class SnippetProvider {
     };
 
 
-    public static async makeSnippetRequest(generatedSnippetUrl: IGeneratedSnippetURL): Promise<string>{
+    private static async makeSnippetRequest(generatedSnippetUrl: IGeneratedSnippetURL): Promise<string>{
         const response: string= await nodeFetch(generatedSnippetUrl);
         return response;
     }
